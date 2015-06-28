@@ -65,7 +65,7 @@ const SplitView = React.createClass({
       overflow: 'hidden',
       [fixedPos]: '0',
       [fixedDim]: '100%',
-      [changingPos]: `calc(${this.state.splitOffsetPercent}% + ${splitDraggerSize}px)`,
+      [changingPos]: `calc(${this.state.splitOffsetPercent}% + ${halfSplitDraggerSize}px)`,
       [changingDim]: `calc(${this.state.splitOffsetPercent}% - ${halfSplitDraggerSize}px)` };
 
     return (

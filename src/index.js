@@ -11,14 +11,23 @@ const debounce = (fn, ms, t) => () => {
   t = setTimeout(fn, ms); };
 
 const styles = {
-  fill: {
-    height: '100%'
+  ace: {
+    height: '100%',
+  },
+  console: {
+    height: '100%',
+    overflow: 'auto',
   },
   replContainer: {
     position: 'relative',
     width: '100vw',
     height: '100vh',
-    overflow: 'hidden'
+    overflow: 'hidden',
+  },
+  playRun: {
+    position: 'absolute',
+    bottom: '10px',
+    right: '10px',
   }
 };
 
@@ -83,7 +92,7 @@ const ReactREPL = React.createClass({
           orientation={this.state.orientation}
           splitDraggerSize={this.props.splitDraggerSize}>
 
-          <div style={styles.fill}>
+          <div style={styles.ace}>
             <Ace
               onChange={this.handleAceChange}
               ref="ace"
@@ -92,13 +101,13 @@ const ReactREPL = React.createClass({
               theme="monokai" />
           </div>
 
-          <div style={styles.fill}>
+          <div style={styles.console}>
 
             <div>
               <Console log={consoleLog.get() || null} />
             </div>
 
-            <PlayRun />
+            <PlayRun style={styles.playRun} />
           </div>
 
         </SplitView>

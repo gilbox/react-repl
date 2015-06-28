@@ -1,47 +1,41 @@
 const React = require('react');
 
+const styles = {
+  play: {
+    width: '100px',
+    height: '50px',
+  },
+  playButton: {
+    width: '80px',
+    height: '26px',
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    color: '#666',
+    cursor: 'pointer',
+    background: 'white',
+    textDecoration: 'none',
+    borderRadius: '3px',
+    border: '2px solid #ccc',
+    fontSize: '15px',
+    textAlign: 'center',
+    fontFamily: 'Arial',
+  },
+  autoRun: {
+    fontSize: '13px',
+    fontFamily: 'Arial',
+    position: 'absolute',
+    bottom: '2px',
+    left: 0,
+  }
+};
+
 /*
-
-.play {
-  position: absolute;
-  right: 10px;
-  bottom: 0;
-}
-
-.play,
-.play-button {
-  height: 30px;
-  width: 80px;
-}
-.play {
-    height: 50px;
-}
-.play-button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #666;
-  cursor: pointer;
-  background: white;
-  text-decoration: none;
-  border-radius: 3px;
-  border: 2px solid #ccc;
-  font-size: 17px;
-  text-align: center;
-  font-family: Arial;
-}
 .play-button:hover {
   color: black;
   border: 2px solid black;
 }
-.auto-run {
-  font-size: 13px;
-  font-family: Arial;
-  position: absolute;
-  bottom: 2px;
-  left: 3px;
-}
- */
+*/
 
 module.exports = React.createClass({
   displayName: 'PlayRun',
@@ -52,11 +46,11 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <div className="play">
+      <div style={{...styles.play, ...this.props.style}}>
               {!this.state.autoRun && <button
                 onClick={_ => this.forceUpdate()}
-                className="play-button">&#9658; Run</button>}
-        <label className="auto-run">
+                style={styles.playButton}>&#9658; Run</button>}
+        <label style={styles.autoRun}>
           <input type="checkbox"
             onChange={e=>
               this.setState({autoRun:!this.state.autoRun})}

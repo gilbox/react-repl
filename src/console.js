@@ -10,7 +10,6 @@ const styles = {
     overflow: 'auto'
   },
   console: {
-    border: '1px solid red',
     maxHeight: '100%',
     //vertical-align: bottom,
     overflow: 'scroll',
