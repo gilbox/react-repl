@@ -16,9 +16,12 @@ function hijackLog() {
   console.warn("The console.log has been hijacked by react-repl. This is not a security alert, it's a notice to developers.");
 
   console.log = function(...args) {
-    fullLog += (fullLog ? "\n":'') + args.join(' ');
+    fullLog += (fullLog ? "\n":'') +
+      args.map(v =>
+        (typeof v === 'string') ?
+          `${v} ` : JSON.stringify(v, null, 2) + "\n").join('');
     _log.apply(console, args);
-  };
+  }
 
   hijacked = true;
 

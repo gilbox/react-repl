@@ -25,13 +25,15 @@ const styles = {
 const ReactREPL = React.createClass({
   propTypes: {
     splitDraggerSize: React.PropTypes.number,
-    initialOrientation: React.PropTypes.oneOf(['vertical', 'horizontal'])
+    initialOrientation: React.PropTypes.oneOf(['vertical', 'horizontal']),
+    initialCode: React.PropTypes.string
   },
-  
+
   getDefaultProps() {
     return {
       splitDraggerSize: 12,
       initialOrientation: 'vertical',
+      initialCode: ''
     }
   },
 
@@ -44,8 +46,20 @@ const ReactREPL = React.createClass({
   },
 
   componentDidMount() {
-    //const update = debounce(_=> this.forceUpdate(), 100);
-    //this.refs.ace.editor.on('change', _=> this.state.autoRun && update());
+    // const update = debounce(_=> this.forceUpdate(), 100);
+    // this.refs.ace.editor.on('change', _=> this.state.autoRun && update());
+  },
+
+  updateCode(value) {  // debounced update
+    const code = value;
+    clearTimeout(this.updateCodeTO);
+    this.updateCodeTO = setTimeout(() => this.setState({code}), 200);
+  },
+
+  handleAceChange(value) {
+    if (this.state.autoRun) {
+      this.updateCode(value);
+    }
   },
 
   render() {
@@ -54,10 +68,8 @@ const ReactREPL = React.createClass({
     consoleLog.clear();
 
     try {
-      consoleLog('transformed....', theCode);
       const es5 = babel.transform(theCode).code;
-      //const es5 = 'console.log("fake code");';
-      consoleLog(es5);
+      consoleLog("-------- Transformed Code --------\n" + es5 + "\n----------------------------------");
       eval(es5);
     } catch (e) {
       console.log(e.stack);
@@ -73,6 +85,7 @@ const ReactREPL = React.createClass({
 
           <div style={styles.fill}>
             <Ace
+              onChange={this.handleAceChange}
               ref="ace"
               name="aceEditor"
               mode="javascript"
