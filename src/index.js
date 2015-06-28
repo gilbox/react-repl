@@ -94,6 +94,7 @@ const ReactREPL = React.createClass({
 
           <div style={styles.ace}>
             <Ace
+              value={theCode}
               onChange={this.handleAceChange}
               ref="ace"
               name="aceEditor"
