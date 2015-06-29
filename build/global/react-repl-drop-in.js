@@ -63,12 +63,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React = __webpack_require__(1);
 	var Repl = __webpack_require__(152);
 
-	function repl(domElement) {
+	function repl(domElement, initialCode, initialOrientation, mode, theme) {
+	  if (mode === undefined) mode = 'javascript';
+	  var splitDraggerSize = arguments[5] === undefined ? 20 : arguments[5];
+
 	  React.render(React.createElement(Repl, {
-	    mode: 'javascript',
-	    theme: null,
-	    splitDraggerSize: 20,
-	    initialOrientation: 'vertical',
+	    mode: mode,
+	    theme: theme,
+	    splitDraggerSize: splitDraggerSize,
+	    initialOrientation: initialOrientation,
 	    initialCode: initialCode }), domElement);
 	}
 
