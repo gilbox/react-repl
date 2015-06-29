@@ -54,7 +54,7 @@ export default class ReactREPL extends Component {
       code: props.initialCode,
     };
   }
-  
+
   updateCode(value) {  // debounced update
     const code = value;
     clearTimeout(this.updateCodeTO);
@@ -85,7 +85,7 @@ export default class ReactREPL extends Component {
 
         <SplitView
           style={styles.replContainer}
-          orientation={this.state.orientation}
+          initialOrientation={this.props.initialOrientation}
           splitDraggerSize={this.props.splitDraggerSize}>
 
           <div style={styles.ace}>

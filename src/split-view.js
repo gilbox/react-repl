@@ -1,28 +1,30 @@
 const React = require('react');
 const {Component} = React;
 const SplitDragger = require('./split-dragger');
+const DOUBLE_CLICK_TIMEOUT = 300;
 
 export default class SplitView extends Component {
   static propTypes = {
     splitDraggerSize: React.PropTypes.number,
-    orientation: React.PropTypes.oneOf(['vertical', 'horizontal'])
+    initialOrientation: React.PropTypes.oneOf(['vertical', 'horizontal'])
   }
 
   static defaultProps = {
     splitDraggerSize: 12,
-    orientation: 'vertical',
+    initialOrientation: 'vertical',
     initialSplitOffsetPercent: 50,
   }
 
   constructor(props) {
     super(props);
     this.state = {
+      orientation: props.initialOrientation,
       splitOffsetPercent: props.initialSplitOffsetPercent,
     };
   }
 
   isVertical() {
-    return this.props.orientation === 'vertical'
+    return this.state.orientation === 'vertical'
   }
 
   handleSplitDrag(offset) {
@@ -32,6 +34,16 @@ export default class SplitView extends Component {
 
     const splitOffsetPercent = this.state.splitOffsetPercent + 100 * offset / containerSize;
     this.setState({ splitOffsetPercent });
+  }
+
+  handleSplitClick() {
+    if (this.splitClicked) {
+      // toggle orientation on dbl-click
+      this.setState({orientation: this.isVertical() ? 'horizontal' : 'vertical' });
+    } else {
+      this.splitClicked = true;
+      setTimeout(_=> this.splitClicked = false, DOUBLE_CLICK_TIMEOUT);
+    }
   }
 
   render() {
@@ -54,6 +66,7 @@ export default class SplitView extends Component {
 
     const splitDraggerProps = {
       position: "absolute",
+      onClick: ::this.handleSplitClick,
       onDragEnd: ::this.handleSplitDrag,
       orientation: this.state.orientation,
       [changingPos]: `calc(${this.state.splitOffsetPercent}% - ${halfSplitDraggerSize}px)`,

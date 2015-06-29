@@ -27,12 +27,14 @@ export default class SplitDragger extends Component {
     style: React.PropTypes.object,
     draggerStyle: React.PropTypes.object,
     onDragEnd: React.PropTypes.func,
+    onClick: React.PropTypes.func,
     orientation: React.PropTypes.oneOf(['vertical', 'horizontal'])
   }
 
   static defaultProps = {
     orientation: 'vertical',
-    onDragEnd: noop
+    onDragEnd: noop,
+    onClick: noop
   }
 
   constructor(props) {
@@ -87,6 +89,7 @@ export default class SplitDragger extends Component {
           ...this.props.style }}>
 
         <div
+          onClick={this.props.onClick}
           onMouseDown={::this.handleMouseDown}
           style={{
             cursor: isVertical ? 'ew-resize' : 'ns-resize',
