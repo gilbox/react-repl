@@ -79,7 +79,7 @@ export default class SplitView extends Component {
       [fixedPos]: '0',
       [fixedDim]: '100%',
       [changingPos]: `calc(${this.state.splitOffsetPercent}% + ${halfSplitDraggerSize}px)`,
-      [changingDim]: `calc(${this.state.splitOffsetPercent}% - ${halfSplitDraggerSize}px)` };
+      [changingDim]: `calc(${100-this.state.splitOffsetPercent}% - ${halfSplitDraggerSize}px)` };
 
     return (
       <div style={this.props.style} ref="container">
