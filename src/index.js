@@ -38,7 +38,7 @@ export default class ReactREPL extends Component {
     initialOrientation: PropTypes.oneOf(['vertical', 'horizontal']),
     initialCode: PropTypes.string
   }
-  
+
   static defaultProps = {
     splitDraggerSize: 12,
     initialOrientation: 'vertical',
@@ -54,12 +54,7 @@ export default class ReactREPL extends Component {
       code: props.initialCode,
     };
   }
-
-  componentDidMount() {
-    // const update = debounce(_=> this.forceUpdate(), 100);
-    // this.refs.ace.editor.on('change', _=> this.state.autoRun && update());
-  }
-
+  
   updateCode(value) {  // debounced update
     const code = value;
     clearTimeout(this.updateCodeTO);
