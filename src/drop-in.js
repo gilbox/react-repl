@@ -1,13 +1,20 @@
 const React = require('react');
 const Repl = require('./');
 
-export default function repl(domElement) {
+export default function repl(
+  domElement,
+  initialCode,
+  initialOrientation,
+  mode='javascript',
+  theme,
+  splitDraggerSize=20
+) {
   React.render(
     <Repl
-      mode="javascript"
-      theme={null}
-      splitDraggerSize={20}
-      initialOrientation="vertical"
+      mode={mode}
+      theme={theme}
+      splitDraggerSize={splitDraggerSize}
+      initialOrientation={initialOrientation}
       initialCode={initialCode} />
     , domElement);
 }
