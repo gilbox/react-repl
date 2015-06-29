@@ -10,7 +10,7 @@ const App = React.createClass({
     return (
       <Repl
         mode="javascript"
-        theme="monokai"
+        theme=""
         splitDraggerSize={20}
         initialOrientation="vertical"
         initialCode={initialCode} />

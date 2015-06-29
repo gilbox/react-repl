@@ -10,9 +10,8 @@
   "homepage": "https://github.com/gilbox/react-repl",
   "bugs": "https://github.com/gilbox/react-repl/issues",
   "scripts": {
-    "build-global": "rm -rf build/global && npm run build-global-repl && npm run build-global-drop-in",
+    "build-global": "rm -rf build/global && npm run build-global-repl && node ./generate-drop-ins.js",
     "build-global-repl": "NODE_ENV=production webpack src/index.js build/global/react-repl.js && NODE_ENV=production COMPRESS=1 webpack src/index.js build/global/react-repl.min.js && echo \"gzipped, the global build is `gzip -c build/global/react-repl.min.js | wc -c` bytes\"",
-    "build-global-drop-in": "NODE_ENV=production webpack src/drop-in.js build/global/react-repl-drop-in.js --config webpack.config.drop-in.js && NODE_ENV=production COMPRESS=1 webpack src/drop-in.js build/global/react-repl-drop-in.min.js --config webpack.config.drop-in.js && echo \"gzipped, the global build is `gzip -c build/global/react-repl.min.js | wc -c` bytes\"",
     "build-npm": "rm -rf build/npm && babel -d build/npm/lib ./src && cp README.md build/npm && find -X build/npm/lib -type d -name __tests__ | xargs rm -rf && node -p 'p=require(\"./package-npm\");JSON.stringify(p,null,2)' > build/npm/package.json",
     "examples": "rm -rf examples/js && webpack-dev-server --config examples/webpack.config.js --content-base examples",
     "examples-build": "rm -rf examples/js && webpack --config examples/webpack.build.config.js",
