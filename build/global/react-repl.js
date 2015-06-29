@@ -349,8 +349,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var props = this.props;
 
 	      this.editor = ace.edit(props.name);
-	      this.editor.getSession().setMode('ace/mode/' + props.mode);
-	      this.editor.setTheme('ace/theme/' + props.theme);
+	      if (props.mode) this.editor.getSession().setMode('ace/mode/' + props.mode);
+	      if (props.theme) this.editor.setTheme('ace/theme/' + props.theme);
 	      this.editor.setFontSize(props.fontSize);
 	      this.editor.on('change', this.handleChange.bind(this));
 	      this.editor.setValue(props.value);
@@ -380,8 +380,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      this.editor = ace.edit(nextProps.name);
-	      this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
-	      this.editor.setTheme('ace/theme/' + nextProps.theme);
+	      if (nextProps.mode) this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
+	      if (nextProps.theme) this.editor.setTheme('ace/theme/' + nextProps.theme);
 	      this.editor.setFontSize(nextProps.fontSize);
 	      this.editor.setOption('maxLines', nextProps.maxLines);
 	      this.editor.setOption('readOnly', nextProps.readOnly);
@@ -83570,7 +83570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var secondPaneStyles = (_secondPaneStyles = {
 	        position: 'absolute',
 	        overflow: 'hidden'
-	      }, _defineProperty(_secondPaneStyles, fixedPos, '0'), _defineProperty(_secondPaneStyles, fixedDim, '100%'), _defineProperty(_secondPaneStyles, changingPos, 'calc(' + this.state.splitOffsetPercent + '% + ' + halfSplitDraggerSize + 'px)'), _defineProperty(_secondPaneStyles, changingDim, 'calc(' + this.state.splitOffsetPercent + '% - ' + halfSplitDraggerSize + 'px)'), _secondPaneStyles);
+	      }, _defineProperty(_secondPaneStyles, fixedPos, '0'), _defineProperty(_secondPaneStyles, fixedDim, '100%'), _defineProperty(_secondPaneStyles, changingPos, 'calc(' + this.state.splitOffsetPercent + '% + ' + halfSplitDraggerSize + 'px)'), _defineProperty(_secondPaneStyles, changingDim, 'calc(' + (100 - this.state.splitOffsetPercent) + '% - ' + halfSplitDraggerSize + 'px)'), _secondPaneStyles);
 
 	      return React.createElement(
 	        'div',
