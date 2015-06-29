@@ -49,8 +49,8 @@ export default class Ace extends Component {
     const {props} = this;
 
     this.editor = ace.edit(props.name);
-    this.editor.getSession().setMode('ace/mode/'+props.mode);
-    this.editor.setTheme('ace/theme/'+props.theme);
+    if (props.mode) this.editor.getSession().setMode('ace/mode/'+props.mode);
+    if (props.theme) this.editor.setTheme('ace/theme/'+props.theme);
     this.editor.setFontSize(props.fontSize);
     this.editor.on('change', ::this.handleChange);
     this.editor.setValue(props.value);
@@ -77,8 +77,8 @@ export default class Ace extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.editor = ace.edit(nextProps.name);
-    this.editor.getSession().setMode('ace/mode/'+nextProps.mode);
-    this.editor.setTheme('ace/theme/'+nextProps.theme);
+    if (nextProps.mode) this.editor.getSession().setMode('ace/mode/'+nextProps.mode);
+    if (nextProps.theme) this.editor.setTheme('ace/theme/'+nextProps.theme);
     this.editor.setFontSize(nextProps.fontSize);
     this.editor.setOption('maxLines', nextProps.maxLines);
     this.editor.setOption('readOnly', nextProps.readOnly);
