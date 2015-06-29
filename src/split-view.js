@@ -1,29 +1,29 @@
 const React = require('react');
+const {Component} = React;
 const SplitDragger = require('./split-dragger');
 
-const SplitView = React.createClass({
-  propTypes: {
+export default class SplitView extends Component {
+  static propTypes = {
     splitDraggerSize: React.PropTypes.number,
     orientation: React.PropTypes.oneOf(['vertical', 'horizontal'])
-  },
+  }
 
-  getDefaultProps() {
-    return {
-      splitDraggerSize: 12,
-      orientation: 'vertical',
-      initialSplitOffsetPercent: 50,
-    }
-  },
+  static defaultProps = {
+    splitDraggerSize: 12,
+    orientation: 'vertical',
+    initialSplitOffsetPercent: 50,
+  }
 
-  getInitialState() {
-    return {
-      splitOffsetPercent: this.props.initialSplitOffsetPercent,
+  constructor(props) {
+    super(props);
+    this.state = {
+      splitOffsetPercent: props.initialSplitOffsetPercent,
     };
-  },
+  }
 
   isVertical() {
     return this.props.orientation === 'vertical'
-  },
+  }
 
   handleSplitDrag(offset) {
     const containerSize = React.findDOMNode(this.refs.container)
@@ -32,7 +32,7 @@ const SplitView = React.createClass({
 
     const splitOffsetPercent = this.state.splitOffsetPercent + 100 * offset / containerSize;
     this.setState({ splitOffsetPercent });
-  },
+  }
 
   render() {
     const isVertical = this.isVertical();
@@ -54,7 +54,7 @@ const SplitView = React.createClass({
 
     const splitDraggerProps = {
       position: "absolute",
-      onDragEnd: this.handleSplitDrag,
+      onDragEnd: ::this.handleSplitDrag,
       orientation: this.state.orientation,
       [changingPos]: `calc(${this.state.splitOffsetPercent}% - ${halfSplitDraggerSize}px)`,
       [fixedDim]: '100%',
@@ -76,6 +76,4 @@ const SplitView = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = SplitView;
+}

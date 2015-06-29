@@ -1,8 +1,9 @@
+const React = require('react');
+const {Component} = React;
 const gearIcon = '⚙';
 
-module.exports = React.createClass({
-  displayName: 'options',
+export default class Options extends Component {
   render() {
     return <div>{gearIcon}</div>;
   }
-});
+}

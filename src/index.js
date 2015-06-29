@@ -1,4 +1,5 @@
 const React = require('react');
+const {Component, PropTypes} = React;
 const Console = require('./console');
 const Ace = require('./ace');
 const babel = require('babel-core/browser');
@@ -31,45 +32,45 @@ const styles = {
   }
 };
 
-const ReactREPL = React.createClass({
-  propTypes: {
-    splitDraggerSize: React.PropTypes.number,
-    initialOrientation: React.PropTypes.oneOf(['vertical', 'horizontal']),
-    initialCode: React.PropTypes.string
-  },
+export default class ReactREPL extends Component {
+  static propTypes = {
+    splitDraggerSize: PropTypes.number,
+    initialOrientation: PropTypes.oneOf(['vertical', 'horizontal']),
+    initialCode: PropTypes.string
+  }
+  
+  static defaultProps = {
+    splitDraggerSize: 12,
+    initialOrientation: 'vertical',
+    initialCode: ''
+  }
 
-  getDefaultProps() {
-    return {
-      splitDraggerSize: 12,
-      initialOrientation: 'vertical',
-      initialCode: ''
-    }
-  },
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
-      orientation: this.props.initialOrientation,
+    this.state = {
+      orientation: props.initialOrientation,
       autoRun: true,
-      code: this.props.initialCode,
+      code: props.initialCode,
     };
-  },
+  }
 
   componentDidMount() {
     // const update = debounce(_=> this.forceUpdate(), 100);
     // this.refs.ace.editor.on('change', _=> this.state.autoRun && update());
-  },
+  }
 
   updateCode(value) {  // debounced update
     const code = value;
     clearTimeout(this.updateCodeTO);
     this.updateCodeTO = setTimeout(() => this.setState({code}), 200);
-  },
+  }
 
   handleAceChange(value) {
     if (this.state.autoRun) {
       this.updateCode(value);
     }
-  },
+  }
 
   render() {
     const theCode = this.state.code;
@@ -95,7 +96,7 @@ const ReactREPL = React.createClass({
           <div style={styles.ace}>
             <Ace
               value={theCode}
-              onChange={this.handleAceChange}
+              onChange={::this.handleAceChange}
               ref="ace"
               name="aceEditor"
               mode="javascript"
@@ -116,6 +117,4 @@ const ReactREPL = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = ReactREPL;
+}

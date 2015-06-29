@@ -35,7 +35,8 @@
   "peerDependencies": {},
   "dependencies": {
     "babel-runtime": "^5.6.7",
-    "brace": "^0.5.1"
+    "brace": "^0.5.1",
+    "elegant-react": "^0.1.0"
   },
   "tags": [
     "react",

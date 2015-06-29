@@ -1,73 +1,79 @@
 // modified version of https://raw.githubusercontent.com/securingsincity/react-ace/master/src/ace.jsx
 
-var React = require('react');
-var ace = require('brace');
+const React = require('react');
+const {Component, PropTypes} = React;
+const ace = require('brace');
 
-module.exports = React.createClass({
-  displayName: 'Ace',
-  propTypes: {
-    mode : React.PropTypes.string,
-    theme: React.PropTypes.string,
-    name: React.PropTypes.string,
-    height: React.PropTypes.string,
-    width: React.PropTypes.string,
-    fontSize: React.PropTypes.number,
-    showGutter: React.PropTypes.bool,
-    handleChange: React.PropTypes.func,
-    value: React.PropTypes.string,
-    onLoad: React.PropTypes.func,
-    maxLines: React.PropTypes.number,
-    readOnly: React.PropTypes.bool,
-    highlightActiveLine: React.PropTypes.bool,
-    showPrintMargin: React.PropTypes.bool
-  },
+export default class Ace extends Component {
+  static displayName = 'Ace'
+
+  static propTypes = {
+    mode : PropTypes.string,
+    theme: PropTypes.string,
+    name: PropTypes.string,
+    height: PropTypes.string,
+    width: PropTypes.string,
+    fontSize: PropTypes.number,
+    showGutter: PropTypes.bool,
+    handleChange: PropTypes.func,
+    value: PropTypes.string,
+    onLoad: PropTypes.func,
+    maxLines: PropTypes.number,
+    readOnly: PropTypes.bool,
+    highlightActiveLine: PropTypes.bool,
+    showPrintMargin: PropTypes.bool
+  }
+
+  static defaultProps = {
+    name: 'brace-editor',
+    mode: '',
+    theme: '',
+    height: '100%',
+    width: '100%',
+    value: '',
+    fontSize: 12,
+    showGutter: true,
+    handleChange: null,
+    onLoad: null,
+    maxLines: null,
+    readOnly: false,
+    highlightActiveLine: true,
+    showPrintMargin: true
+  }
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    const {props} = this;
+
+    this.editor = ace.edit(props.name);
+    this.editor.getSession().setMode('ace/mode/'+props.mode);
+    this.editor.setTheme('ace/theme/'+props.theme);
+    this.editor.setFontSize(props.fontSize);
+    this.editor.on('change', ::this.handleChange);
+    this.editor.setValue(props.value);
+    this.editor.renderer.setShowGutter(props.showGutter);
+    this.editor.setOption('maxLines', props.maxLines);
+    this.editor.setOption('readOnly', props.readOnly);
+    this.editor.setOption('highlightActiveLine', props.highlightActiveLine);
+    this.editor.setShowPrintMargin(props.setShowPrintMargin);
+
+    if (props.onLoad) {
+      props.onLoad(this.editor);
+    }
+  }
 
   shouldComponentUpdate() {
     return false;
-  },
-
-  getDefaultProps() {
-    return {
-      name: 'brace-editor',
-      mode: '',
-      theme: '',
-      height: '100%',
-      width: '100%',
-      value: '',
-      fontSize: 12,
-      showGutter: true,
-      handleChange: null,
-      onLoad: null,
-      maxLines: null,
-      readOnly: false,
-      highlightActiveLine: true,
-      showPrintMargin: true
-    };
-  },
+  }
 
   handleChange() {
     if (this.props.onChange) {
       this.props.onChange(this.editor.getValue());
     }
-  },
-
-  componentDidMount() {
-    this.editor = ace.edit(this.props.name);
-    this.editor.getSession().setMode('ace/mode/'+this.props.mode);
-    this.editor.setTheme('ace/theme/'+this.props.theme);
-    this.editor.setFontSize(this.props.fontSize);
-    this.editor.on('change', this.handleChange);
-    this.editor.setValue(this.props.value);
-    this.editor.renderer.setShowGutter(this.props.showGutter);
-    this.editor.setOption('maxLines', this.props.maxLines);
-    this.editor.setOption('readOnly', this.props.readOnly);
-    this.editor.setOption('highlightActiveLine', this.props.highlightActiveLine);
-    this.editor.setShowPrintMargin(this.props.setShowPrintMargin);
-
-    if (this.props.onLoad) {
-      this.props.onLoad(this.editor);
-    }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.editor = ace.edit(nextProps.name);
@@ -85,15 +91,13 @@ module.exports = React.createClass({
     if (nextProps.onLoad) {
       nextProps.onLoad(this.editor);
     }
-  },
+  }
 
   render() {
-    console.log("render ace");
-
     var divStyle = {
       width: this.props.width,
       height: this.props.height
     };
-    return (<div id={this.props.name} onChange={this.handleChange} style={divStyle}></div>);
+    return (<div id={this.props.name} onChange={::this.handleChange} style={divStyle}></div>);
   }
-});
+}

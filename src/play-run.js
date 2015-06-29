@@ -1,5 +1,5 @@
 const React = require('react');
-
+const {Component} = React;
 const styles = {
   play: {
     width: '100px',
@@ -37,12 +37,11 @@ const styles = {
 }
 */
 
-module.exports = React.createClass({
-  displayName: 'PlayRun',
-
-  getInitialState() {
-    return {autoRun:true};
-  },
+export default class PlayRun extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {autoRun:true};
+  }
 
   render() {
     return (
@@ -59,4 +58,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}

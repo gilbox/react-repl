@@ -1,4 +1,5 @@
 const React = require('react');
+const {Component} = React;
 
 const styles = {
   consoleContainer: {
@@ -32,9 +33,8 @@ const styles = {
   }
 };
 
-const Console = React.createClass({
+export default class Console extends Component {
   render() {
-
     return this.props.log &&
       (<div style={styles.console}>
         <pre style={styles.consolePre}>
@@ -42,6 +42,4 @@ const Console = React.createClass({
         </pre>
       </div>);
   }
-});
-
-module.exports = Console;
+}
