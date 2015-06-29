@@ -9,6 +9,8 @@ const App = React.createClass({
     const initialCode = "console.log('foooo');"
     return (
       <Repl
+        mode="javascript"
+        theme="monokai"
         splitDraggerSize={20}
         initialOrientation="vertical"
         initialCode={initialCode} />

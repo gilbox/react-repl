@@ -34,15 +34,21 @@ const styles = {
 
 export default class ReactREPL extends Component {
   static propTypes = {
+    mode: PropTypes.string,
+    theme: PropTypes.string,
     splitDraggerSize: PropTypes.number,
     initialOrientation: PropTypes.oneOf(['vertical', 'horizontal']),
-    initialCode: PropTypes.string
+    initialCode: PropTypes.string,
+    debounceDelay: PropTypes.number
   }
 
   static defaultProps = {
+    theme: null,
+    mode: 'javascript',
     splitDraggerSize: 12,
     initialOrientation: 'vertical',
-    initialCode: ''
+    initialCode: '',
+    debounceDelay: PropTypes.number
   }
 
   constructor(props) {
@@ -58,7 +64,7 @@ export default class ReactREPL extends Component {
   updateCode(value) {  // debounced update
     const code = value;
     clearTimeout(this.updateCodeTO);
-    this.updateCodeTO = setTimeout(() => this.setState({code}), 200);
+    this.updateCodeTO = setTimeout(() => this.setState({code}), this.props.debounceDelay);
   }
 
   handleAceChange(value) {
@@ -94,8 +100,8 @@ export default class ReactREPL extends Component {
               onChange={::this.handleAceChange}
               ref="ace"
               name="aceEditor"
-              mode="javascript"
-              theme="monokai" />
+              mode={this.props.mode}
+              theme={this.props.theme} />
           </div>
 
           <div style={styles.console}>
