@@ -34,7 +34,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      'react-repl': path.resolve(__dirname + '../../src/')
+      'react-repl': path.resolve(path.join(__dirname, '../src/'))
     }
   },
 
